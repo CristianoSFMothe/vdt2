@@ -1,7 +1,10 @@
 *** Settings ***
 Documentation          Login tests
 
-Resource               ../resources/main.resource                          
+Resource               ../resources/main.resource     
+
+Test Setup             Start Test
+Test Teardown          Finish Test
   
 
 *** Test Cases ***
@@ -17,5 +20,6 @@ Não deve logar com senha incorreta
     Go To Login Page 
     Submite Credenciais        papito@gmail.com              abc123
     Tost Message Should Be     Credenciais inválidas, tente novamente!
+    
     
    

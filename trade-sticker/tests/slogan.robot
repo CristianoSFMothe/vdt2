@@ -10,4 +10,3 @@ Deve validar o slogan da home page
     New Browser         headless=False
     New Page            ${URL_HOME}
     Get Text            .logo-container h2    contains    ${SLOGAN}
-    Take Screenshot

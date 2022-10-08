@@ -8,7 +8,7 @@ ${URL_HOME}            https://trade-sticker-dev.vercel.app/
 
 *** Keywords ***
 Go To Login Page
-    New Browser        headless=False
+   
     New Page           ${URL_HOME} 
 
 Submite Credenciais
