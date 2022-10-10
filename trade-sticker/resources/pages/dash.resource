@@ -10,6 +10,7 @@ ${clicked_sticker}
 ${search_button}        css=button >> text=Buscar
 ${search_input}         input[placeholder^=Busque]
 ${button_gitbs}         xpath=//button[@class='active']/../../footer/button
+${button_contato}       css=button >> text="Entrar em contato"
 
 *** Keywords ***
 #Verifica se o usuário conseguiu logar e entrou na página de busca
@@ -50,8 +51,8 @@ Get in Touch By Sticker
 
 Get in Touch
 #Clica no primeiro botão de Entrar em Contato de um usuário
-    ${buttons}              Get Elements                    css=button >> text="Entrar em contato"
-    ${button}               Get From List                   ${buttons}                            0
+    ${buttons}              Get Elements                    ${button_contato}
+    ${button}               Get From List                   ${buttons}                  0
     Click                   ${button}                  
 
 No Sticker
