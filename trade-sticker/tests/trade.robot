@@ -1,19 +1,26 @@
 *** Settings ***
-Documentation     Teste de negociação de figurinhas da copa   
-
+Documentation  Trade Stickers
 Resource    ../resources/main.resource
 
-Test Setup       Start Test
-Test Teardown    Finish Test
+Test Setup      Start Test
+Test Teardown   Finish Test
 
 *** Test Cases ***
-
-Deve negociar a figurinha Neymar Legend
-
+Deve poder negociar com um usuário
+    [Tags]                      trade_user
     Do Login
-   
+    Click Search Sticker Button
+    Get in Touch
+    Whatsapp Generic Message 
 
-    Search User        legend
-    Select Sticker     Neymar Jr
-    Get in touch    
-    Whatsapp Sticker Message    Neymar Jr
+Deve poder negociar uma figurinha específica com um usuário
+    [Tags]                      trade_sticker
+    Do Login
+    
+    ${sticker_name}             Set Variable
+    ...                         KYLIAN
+    
+    Search Sticker              ${sticker_name} 
+    Select Sticker              ${sticker_name}
+    Get in Touch By Sticker
+    Whatsapp Sticker Message

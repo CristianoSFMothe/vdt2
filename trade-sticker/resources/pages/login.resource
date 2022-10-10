@@ -3,62 +3,32 @@ Documentation    Login Page
 
 Library    Browser
 
+*** Variables ***
+${email_input}        css=input[name="email"] 
+${password_input}     css=input[name="password"]
+${login_button}       css=button >> text=Entrar
 
 *** Keywords ***
-Go To Login Page
-    New Browser     chromium    headless=false
-    New Page        https://trade-sticker-dev.vercel.app
-    
+
+Go to Login Page
+#Abre a página do site https://trade-sticker-dev.vercel.app
+    New Page                   https://trade-sticker-dev.vercel.app
+
+Click Login Button  
+#Insere ${password} na caixa de password                    
+    Click                      ${login_button} 
+
 Submit Credentials
-    [Arguments]    ${email}    ${senha}
+#Insere ${email} e ${password} nas suas caixas e clica no botão de login
+    [Arguments]                ${email}             ${password}                   
+    Fill Text                  ${email_input}       ${email}
+    Fill Text                  ${password_input}    ${password}
 
-    Fill Text        input[name=email]        ${email}
-    Fill Text        input[name=password]     ${senha}
-    Click            css=button >> text=Entrar
-
-Do not send password credentials
-    [Arguments]    ${email}
-
-    Fill Text     input[name=email]        ${email}
-    Click         css=button >> text=Entrar
-
-Do not send without email credentials
-    [Arguments]    ${senha}
-
-    Fill Text     input[name=password]    ${senha}
-    Click         css=button >> text=Entrar
-
-Do not send without credentials
-    Click         css=button >> text=Entrar
-
-
-Toast Message Shold be
-    [Arguments]    ${expect_message}
-
-    ${LOCATOR}    
-    ...            Set Variable
-    ...            css=.Toastify__toast-body div >> text=${expect_message}
-    Wait For Elements State    ${LOCATOR}    visible    1 
-
-
-Toast message shold be secret password
-    [Arguments]    ${not_passoword}
-
-    ${LOCATOR}    Set Variable
-    ...           css=.Toastify__toast-body div >> text=${not_passoword} 
-    Wait For Elements State    ${LOCATOR}     visible    1        
-
-Toast message inform email should be   
-     [Arguments]    ${not_email}
-
-     ${LOCATOR}    Set Variable
-     ...           css=.Toastify__toast-body div >> text=${not_email}           
-     Wait For Elements State    ${LOCATOR}    visible    1   
-
-
-Shold Be all Credentials
-    [Arguments]    ${credentials}
-
-    ${LOCATOR}    Set Variable
-    ...           css=.Toastify__toast-body div >> text=${credentials}  
-    Wait For Elements State    ${LOCATOR}   visible    1    
+Toast Message Should Be
+#Verifica a mensagem do toast que aparece
+    [Arguments]                ${expected_message}
+    ${toast}
+    ...                        Set Variable
+    ...                        css=.Toastify__toast-body div >> text=${expected_message}
+    
+    Wait For Elements State    ${toast}             visible    3

@@ -1,17 +1,18 @@
 *** Settings ***
-Library   Browser
-Documentation    Verificar se o site é acessado
-
+Documentation   Home page
 Resource    ../resources/main.resource
 
-Test Setup    Start Test
-Test Teardown    Finish Test
+Test Setup      Start Test
+Test Teardown   Finish Test
 
 *** Variables ***
-${SLOGAN}    Conectando colecionadores de figurinhas da copa.
+${slogan}       Conectando colecionadores de figurinhas da copa.
 
 *** Test Cases ***
 Deve validar o slogan da home page
-    New Browser     chromium    headless=false
-    New Page        https://trade-sticker-dev.vercel.app/
-    Get Text        .logo-container h2    contains    ${SLOGAN}     
+    [Tags]                  slogan
+    Go to Login Page
+    
+    Wait For Elements State
+    ...                     css=.logo-container h2 >> text=${slogan}
+    ...                     visible
