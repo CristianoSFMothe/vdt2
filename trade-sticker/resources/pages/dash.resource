@@ -1,34 +1,41 @@
 *** Settings ***
-Documentation        Dashboard Page
+Documentation    Dashboard Pages
 
-Library              Browser
+Library    Browser
 
 *** Keywords ***
-User Logged In
-    ${HEADER_TITLE}     
-    ...                Set Variable     
-    ...                Aquela figurinha incrível a um clique de distância.
-
-    Get Text           css=.header-content strong    equal     ${HEADER_TITLE}
-
+User logged in
+    ${TITULO_CABECALHO}    Set Variable
+    ...                    Aquela figurinha incrível a um clique de distância.
+   Get Text    
+   ...                     css=.header-content strong     equal    ${TITULO_CABECALHO}
 
 Search User
-    [Arguments]        ${TARGET}
-    Fill Text          input[placeholder^=Busque]    ${TARGET}
-    Click              css=button >> text=Buscar
+    [Arguments]    ${target}
 
-Select Sticker
-    [Arguments]        ${NAME}
-    Click              xpath=//img[@alt="${NAME}"]/..
+    Fill Text    //input[@placeholder='Busque aqui...']    ${target}   
+    Click        css=button >> text=Buscar
+   
+   
 
-Get In Touch
-    Click             css=button >> text=Entrar em contato
+Select Sticker 
+    [Arguments]    ${name}
+
+     Click        //img[contains(@alt,'${name}')]
+
+ Get in touch
+
+    Click        css=button >> text=Entrar em Contato
 
 Whatsapp Sticker Message
-    [Arguments]         ${STICKER_NAME}
+    [Arguments]    ${sticker_name}    
+    
+    ${expected_message}    Set Variable     
+    ...    Oi, achei o seu contato no Trade Sticker. Estou interessado(a) na figurinha do ${sticker_name}, bora negociar?
 
-    ${EXPECT_MESSAGE}       Set Variable  
-    ...    Oi, achei o seu contato no Trade Sticker. 
-    ...    Estou interessado(a) na figurinha do ${STICKER_NAME}, bora negociar?
     Switch Page    NEW
-    Wait For Elements State    css=p >> text=${EXPECT_MESSAGE}        visible        5000
+
+    Wait For Elements State
+    ...    css=p >> text=${expected_message}
+    ...    visible
+    ...    5000
